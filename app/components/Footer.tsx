@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import Image from 'next/image'
-import { Shield, TrendingUp, Users, Target, Mail, Phone, MapPin, Linkedin, Twitter, ArrowRight, Sparkles } from 'lucide-react'
+import { Shield, TrendingUp, Users, Target, Mail, Phone, MapPin, Linkedin, ArrowRight, Sparkles } from 'lucide-react'
 import { useStaggeredReveal } from '../hooks/useAnimations'
 
 const footerLinks = {
@@ -37,14 +37,13 @@ const footerLinks = {
 }
 
 const socialLinks = [
-  { icon: Linkedin, href: 'https://linkedin.com', label: 'LinkedIn' },
-  { icon: Twitter, href: 'https://twitter.com', label: 'Twitter' },
+  { icon: Linkedin, href: 'https://www.linkedin.com/company/142878312/', label: 'LinkedIn' },
 ]
 
 const contactInfo = [
   { icon: Mail, label: 'Email', value: 'haritha@msvvwealth.com', href: 'mailto:haritha@msvvwealth.com' },
-  { icon: Phone, label: 'Phone', value: '(555) 123-4567', href: 'tel:+15551234567' },
-  { icon: MapPin, label: 'Address', value: '100 Financial District, NY 10005', href: '#' },
+  // { icon: Phone, label: 'Phone', value: '(555) 123-4567', href: 'tel:+15551234567' },
+  // { icon: MapPin, label: 'Address', value: '100 Financial District, NY 10005', href: '#' },
 ]
 
 const whyMSVV = [

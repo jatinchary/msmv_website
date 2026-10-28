@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useCallback, useRef } from 'react'
+import { useState, useEffect, useCallback, useRef, type RefObject } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronLeft, ChevronRight, Quote, Star, Shield, Users, Target, TrendingUp } from 'lucide-react'
 import { useCounter, useStaggeredReveal, useScroll } from '../hooks/useAnimations'
@@ -49,9 +49,9 @@ const testimonials = [
 ]
 
 const stats = [
-  { value: 2300, suffix: 'K+', label: 'Avg annual tax savings', icon: TrendingUp },
-  { value: 94, suffix: '%', label: 'Client retention rate', icon: Shield },
-  { value: 12, suffix: '+', label: 'Specialist partners', icon: Users },
+  { value: 850, suffix: 'K+', label: 'Avg annual tax savings', icon: TrendingUp },
+  { value: 92, suffix: '%', label: 'Client retention rate', icon: Shield },
+  { value: 10, suffix: '+', label: 'Specialist partners', icon: Users },
 ]
 
 export default function Testimonials() {
@@ -212,6 +212,7 @@ export default function Testimonials() {
               key={stat.label}
               stat={stat}
               count={statCounters[index].count}
+              counterRef={statCounters[index].ref}
               animation={statAnimations[index]}
             />
           ))}
@@ -284,13 +285,15 @@ function TestimonialCard({ testimonial }: { testimonial: typeof testimonials[0] 
   )
 }
 
-function StatCard({ stat, count, animation }: { 
+function StatCard({ stat, count, counterRef, animation }: { 
   stat: typeof stats[0], 
   count: number,
+  counterRef: RefObject<HTMLDivElement>,
   animation: ReturnType<typeof useStaggeredReveal>[0]
 }) {
   return (
     <motion.div
+      ref={counterRef}
       initial={{ opacity: 0, y: 30, scale: 0.98 }}
       whileInView={{ opacity: 1, y: 0, scale: 1 }}
       viewport={{ once: true, margin: '-80px' }}

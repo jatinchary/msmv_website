@@ -232,7 +232,7 @@ export default function CTA() {
                     style={{ transformOrigin: 'left center' }}
                   />
                 </motion.a>
-
+{/* 
                 <motion.a
                   ref={secondaryMagnetic.ref}
                   onMouseMove={secondaryMagnetic.onMouseMove}
@@ -246,16 +246,16 @@ export default function CTA() {
                     y: -2,
                   }}
                   whileTap={{ scale: 0.98 }}
-                >
-                  <Clock className="w-5 h-5" />
+                > */}
+                  {/* <Clock className="w-5 h-5" />
                   Call direct: (555) 123-4567
                   <motion.div
                     className="absolute inset-0 bg-white/5"
                     animate={{ scaleX: [0, 1, 0] }}
                     transition={{ duration: 2, repeat: Infinity, delay: 1, ease: 'easeInOut' }}
                     style={{ transformOrigin: 'right center' }}
-                  />
-                </motion.a>
+                  /> */}
+                {/* </motion.a> */}
               </motion.div>
 
               <motion.div
