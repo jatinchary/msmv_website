@@ -1,6 +1,7 @@
 'use client'
 
 import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion'
+import Image from 'next/image'
 import { ArrowRight, Calendar, Users, Shield, CheckCircle, Clock, Sparkles } from 'lucide-react'
 import { useMagnetic, useStaggeredReveal, useMouseParallax } from '../hooks/useAnimations'
 
@@ -55,6 +56,16 @@ export default function CTA() {
             viewport={{ once: true, margin: '-100px' }}
             transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
           >
+            <div className="absolute inset-0" aria-hidden="true">
+              <Image
+                src="/images/boardroom.jpg"
+                alt=""
+                fill
+                sizes="(min-width: 1024px) 896px, 100vw"
+                className="object-cover opacity-20"
+              />
+              <div className="absolute inset-0 bg-gradient-to-br from-brand-700/80 via-brand-600/70 to-brand-800/90" />
+            </div>
             <motion.div
               className="absolute inset-0"
               aria-hidden="true"
