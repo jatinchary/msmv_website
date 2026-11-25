@@ -1,4 +1,5 @@
 import { Metadata } from 'next'
+import Image from 'next/image'
 import Link from 'next/link'
 import Navbar from '../../components/Navbar'
 import Footer from '../../components/Footer'
@@ -187,6 +188,23 @@ export default function BusinessExitPlanning() {
           className="relative overflow-hidden pt-16 pb-16 sm:pt-24 sm:pb-24 bg-slate-50"
           aria-labelledby="exit-hero-heading"
         >
+          <div className="absolute inset-0" aria-hidden="true">
+            <Image
+              src="/images/hero-office.jpg"
+              alt=""
+              fill
+              priority
+              sizes="100vw"
+              className="object-cover object-center"
+            />
+            <div
+              className="absolute inset-0"
+              style={{
+                background:
+                  'linear-gradient(180deg, rgba(248,250,252,0.92) 0%, rgba(248,250,252,0.85) 55%, rgba(248,250,252,0.98) 100%)',
+              }}
+            />
+          </div>
           <div
             className="absolute -top-24 -right-24 w-[420px] h-[420px] rounded-full blur-3xl opacity-10 pointer-events-none"
             style={{ background: 'linear-gradient(135deg, #14b8a6, #0f766e)' }}
@@ -250,6 +268,17 @@ export default function BusinessExitPlanning() {
               </div>
 
               <div className="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 shadow-soft">
+                <div className="relative -mx-6 sm:-mx-8 -mt-6 sm:-mt-8 mb-6 h-44 overflow-hidden rounded-t-2xl">
+                  <Image
+                    src="/images/handshake.jpg"
+                    alt="Two professionals shaking hands after a successful business agreement"
+                    fill
+                    priority
+                    sizes="(min-width: 1024px) 420px, 100vw"
+                    className="object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-white/10 to-transparent" />
+                </div>
                 <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-brand-600 mb-5">
                   <Sparkles className="w-4 h-4" />
                   At a glance

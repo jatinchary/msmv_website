@@ -1,9 +1,12 @@
 'use client'
 
+import { useState } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
-import { ArrowRight, CheckCircle } from 'lucide-react'
+import { ArrowRight, CheckCircle, ZoomIn } from 'lucide-react'
+import Image from 'next/image'
 import Link from 'next/link'
 import { useCounter, useMouseParallax, useStaggeredReveal } from '../hooks/useAnimations'
+import ImageLightbox from './ImageLightbox'
 
 const highlights = [
   { icon: CheckCircle, text: 'Proactive, not reactive' },
@@ -19,6 +22,7 @@ const stats = [
 ]
 
 export default function Hero() {
+  const [lightboxOpen, setLightboxOpen] = useState(false)
   const { x: mouseX, y: mouseY } = useMouseParallax(15)
   const { scrollY } = useScroll()
   
@@ -31,17 +35,43 @@ export default function Hero() {
 
   return (
     <section id="home" className="relative pt-32 pb-20 sm:pt-40 sm:pb-28 lg:pt-48 lg:pb-36 overflow-hidden">
-      <div className="absolute inset-0 -z-10" aria-hidden="true">
+      <div className="absolute inset-0 -z-10">
+        <Image
+          src="/images/hero-office.jpg"
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-center"
+        />
+        <div
+          className="absolute inset-0 pointer-events-none"
+          aria-hidden="true"
+          style={{
+            background:
+              'linear-gradient(180deg, rgba(255,255,255,0.88) 0%, rgba(255,255,255,0.78) 45%, rgba(255,255,255,0.98) 100%)',
+          }}
+        />
+        <div
+          className="absolute inset-0 pointer-events-none"
+          aria-hidden="true"
+          style={{
+            background:
+              'linear-gradient(90deg, rgba(255,255,255,0.45) 0%, rgba(255,255,255,0.05) 50%, rgba(255,255,255,0.25) 100%)',
+          }}
+        />
         <motion.div
           style={{ y: blob1Y, background: '#3b82f6', transformOrigin: 'center center' }}
-          className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full blur-3xl opacity-20"
+          className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full blur-3xl opacity-20 pointer-events-none"
+          aria-hidden="true"
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 0.2 }}
           transition={{ duration: 1.2, ease: 'easeOut' }}
         />
         <motion.div
           style={{ y: blob2Y, background: '#2563eb', transformOrigin: 'center center' }}
-          className="absolute bottom-0 left-0 w-[400px] h-[400px] rounded-full blur-3xl opacity-10"
+          className="absolute bottom-0 left-0 w-[400px] h-[400px] rounded-full blur-3xl opacity-10 pointer-events-none"
+          aria-hidden="true"
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 0.1 }}
           transition={{ duration: 1.2, ease: 'easeOut', delay: 0.2 }}
@@ -49,14 +79,22 @@ export default function Hero() {
         <motion.div
           style={{ x: mouseX, y: mouseY, background: 'radial-gradient(circle, #3b82f6 0%, transparent 70%)' }}
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full blur-3xl opacity-5 pointer-events-none"
+          aria-hidden="true"
         />
       </div>
 
+      <button
+        type="button"
+        onClick={() => setLightboxOpen(true)}
+        className="absolute inset-0 z-0 cursor-zoom-in"
+        aria-label="View the full hero photo"
+      />
+
       <motion.div
         style={{ y: heroParallaxY }}
-        className="container relative z-10"
+        className="container relative z-10 pointer-events-none"
       >
-        <div className="max-w-4xl mx-auto text-center">
+        <div className="max-w-4xl mx-auto text-center pointer-events-auto">
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -203,8 +241,28 @@ export default function Hero() {
               </motion.div>
             ))}
           </motion.div>
+
+          <motion.button
+            type="button"
+            onClick={() => setLightboxOpen(true)}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2, duration: 0.5 }}
+            className="mt-8 inline-flex items-center gap-2 text-sm font-medium text-slate-500 hover:text-brand-600 transition-colors"
+          >
+            <ZoomIn className="w-4 h-4" />
+            View full photo
+          </motion.button>
         </div>
       </motion.div>
+
+      <ImageLightbox
+        src="/images/hero-office.jpg"
+        alt="Sunlit conference room at MSVV Wealth Partners"
+        open={lightboxOpen}
+        onClose={() => setLightboxOpen(false)}
+      />
     </section>
   )
 }

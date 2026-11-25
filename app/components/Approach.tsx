@@ -1,6 +1,7 @@
 'use client'
 
 import { motion, useMotionValue } from 'framer-motion'
+import Image from 'next/image'
 import { Search, Lightbulb, Puzzle, Target, Shield, Users, CheckCircle, ArrowRight } from 'lucide-react'
 import { useTilt, useStaggeredReveal } from '../hooks/useAnimations'
 
@@ -128,6 +129,51 @@ export default function Approach() {
             />
           ))}
         </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-100px' }}
+          transition={{ delay: 0.15, duration: 0.7 }}
+          className="mt-16 grid lg:grid-cols-2 rounded-3xl overflow-hidden border border-slate-200 bg-white shadow-sm"
+        >
+          <div className="relative min-h-[260px] lg:min-h-[360px]">
+            <Image
+              src="/images/meeting-pro.jpg"
+              alt="Financial advisor and client reviewing a wealth strategy together"
+              fill
+              sizes="(min-width: 1024px) 50vw, 100vw"
+              className="object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/40 via-transparent to-transparent lg:bg-gradient-to-r" />
+          </div>
+          <div className="p-8 sm:p-10 lg:p-12 flex flex-col justify-center">
+            <span className="text-sm font-semibold uppercase tracking-wider text-brand-600 mb-3">
+              One coordinated team
+            </span>
+            <h3 className="text-2xl font-semibold text-slate-900 mb-4 leading-snug">
+              Your CPA, attorney, and strategist — finally on the same page
+            </h3>
+            <p className="text-slate-600 leading-relaxed mb-6">
+              Most advice arrives in pieces. We sit at the center of your advisory network, so
+              every recommendation is reviewed, documented, and executed in the right order.
+            </p>
+            <ul className="space-y-2.5" role="list">
+              {[
+                'Single point of coordination',
+                'Documented, executable roadmap',
+                'Quarterly reviews keep it current',
+              ].map((item) => (
+                <li key={item} className="flex items-center gap-2.5 text-sm text-slate-700">
+                  <span className="w-4 h-4 flex-shrink-0 flex items-center justify-center rounded-full bg-emerald-100 text-emerald-600">
+                    <CheckCircle className="w-2.5 h-2.5" />
+                  </span>
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </motion.div>
 
         <motion.div
           initial={{ opacity: 0, y: 30 }}

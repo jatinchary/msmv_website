@@ -1,6 +1,8 @@
 'use client'
 
+import { useState } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { motion, useMotionValue } from 'framer-motion'
 import {
   Building2,
@@ -13,9 +15,11 @@ import {
   Handshake,
   TrendingUp,
   ChevronRight,
+  ZoomIn,
   type LucideIcon,
 } from 'lucide-react'
 import { useTilt, useStaggeredReveal } from '../hooks/useAnimations'
+import ImageLightbox from './ImageLightbox'
 
 type Service = {
   icon: LucideIcon
@@ -23,6 +27,8 @@ type Service = {
   description: string
   features: string[]
   gradient: string
+  image: string
+  imageAlt: string
   href?: string
 }
 
@@ -39,6 +45,8 @@ const services: Service[] = [
       'Built for $500K+ in pre-tax assets',
     ],
     gradient: 'linear-gradient(135deg, #3b82f6, #1e40af)',
+    image: '/images/retirement.jpg',
+    imageAlt: 'A young plant growing from a pile of coins, representing long-term retirement growth',
     href: '/services/roth-excelerator',
   },
   {
@@ -53,6 +61,8 @@ const services: Service[] = [
       'Written, executable roadmap',
     ],
     gradient: 'linear-gradient(135deg, #4f46e5, #1e40af)',
+    image: '/images/tax-desk.jpg',
+    imageAlt: 'Tax forms, a calculator, and planning documents spread out on a desk',
     href: '/services/tax-strategies',
   },
   {
@@ -67,6 +77,8 @@ const services: Service[] = [
       'Built for a 2–3 year horizon',
     ],
     gradient: 'linear-gradient(135deg, #14b8a6, #0f766e)',
+    image: '/images/handshake.jpg',
+    imageAlt: 'Two professionals shaking hands after a successful business agreement',
     href: '/services/business-exit-planning',
   },
   {
@@ -81,6 +93,8 @@ const services: Service[] = [
       'Works before and after a gain',
     ],
     gradient: 'linear-gradient(135deg, #f59e0b, #b45309)',
+    image: '/images/analytics.jpg',
+    imageAlt: 'Financial analytics dashboard showing performance trends on a laptop',
     href: '/services/capital-gains-mitigation',
   },
   /*
@@ -153,6 +167,7 @@ const services: Service[] = [
 ]
 
 export default function Services() {
+  const [bannerOpen, setBannerOpen] = useState(false)
   const cardAnimations = useStaggeredReveal(services.length, 0.06)
 
   return (
@@ -175,7 +190,7 @@ export default function Services() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.6, ease: 'easeOut' }}
-          className="text-center max-w-3xl mx-auto mb-16"
+          className="text-center max-w-3xl mx-auto mb-10"
         >
           <span className="inline-block px-3 py-1 rounded-full text-sm font-medium mb-4" style={{ background: '#eff6ff', color: '#1d4ed8' }}>
             What we do
@@ -187,6 +202,39 @@ export default function Services() {
             Each service is designed to work in concert with your existing advisors, creating a unified approach that addresses the full spectrum of your financial life.
           </p>
         </motion.div>
+
+        <motion.button
+          type="button"
+          onClick={() => setBannerOpen(true)}
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-80px' }}
+          transition={{ duration: 0.7, ease: 'easeOut' }}
+          className="group relative block w-full h-56 sm:h-72 lg:h-80 rounded-3xl overflow-hidden border border-slate-200 shadow-xl shadow-slate-900/10 mb-12 text-left cursor-zoom-in"
+          aria-label="View the full photo"
+        >
+          <Image
+            src="/images/what-we-do.jpg"
+            alt=""
+            fill
+            sizes="(min-width: 1280px) 1152px, 100vw"
+            className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-slate-950/80 via-slate-900/35 to-transparent" />
+          <div className="absolute inset-0 flex items-end sm:items-center">
+            <div className="p-6 sm:p-10 max-w-lg">
+              <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-200">
+                What we do
+              </span>
+              <p className="mt-2 text-xl sm:text-2xl lg:text-3xl font-semibold text-white leading-snug">
+                One coordinated plan across tax, business, and legacy.
+              </p>
+            </div>
+          </div>
+          <span className="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/15 border border-white/25 backdrop-blur-sm text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+            <ZoomIn className="w-4 h-4" />
+          </span>
+        </motion.button>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {services.map((service, index) => (
@@ -219,6 +267,13 @@ export default function Services() {
           </a>
         </motion.div>
       </div>
+
+      <ImageLightbox
+        src="/images/what-we-do.jpg"
+        alt="Modern MSVV office space where client strategies are built"
+        open={bannerOpen}
+        onClose={() => setBannerOpen(false)}
+      />
     </section>
   )
 }
@@ -262,7 +317,7 @@ function ServiceCard({ service, index, animation }: {
       />
 
       <motion.div
-        className="absolute top-0 left-0 right-0 h-1"
+        className="absolute top-0 left-0 right-0 h-1 z-10"
         style={{ background: service.gradient }}
         initial={{ scaleX: 0 }}
         whileInView={{ scaleX: 1 }}
@@ -271,14 +326,27 @@ function ServiceCard({ service, index, animation }: {
       />
 
       <div className="relative z-10">
-        <motion.div
-          className="w-12 h-12 rounded-xl flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300"
-          style={{ background: service.gradient }}
-          whileHover={{ rotate: 6, scale: 1.1 }}
-          transition={{ duration: 0.3 }}
+        <div
+          className="relative -mx-7 sm:-mx-8 -mt-7 sm:-mt-8 mb-6 aspect-[3/2] overflow-hidden"
+          style={{ background: 'linear-gradient(135deg, #f1f5f9, #e0e7ff)' }}
         >
-          <service.icon className="w-6 h-6 text-white" />
-        </motion.div>
+          <Image
+            src={service.image}
+            alt={service.imageAlt}
+            fill
+            sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+            className="object-contain"
+          />
+          <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-slate-900/30 to-transparent pointer-events-none" />
+          <motion.div
+            className="absolute bottom-4 left-5 w-12 h-12 rounded-xl flex items-center justify-center shadow-lg ring-4 ring-white/20 group-hover:scale-110 transition-transform duration-300"
+            style={{ background: service.gradient }}
+            whileHover={{ rotate: 6, scale: 1.1 }}
+            transition={{ duration: 0.3 }}
+          >
+            <service.icon className="w-6 h-6 text-white" />
+          </motion.div>
+        </div>
 
         <h3 className="text-xl font-semibold text-slate-900 mb-3 group-hover:text-brand-600 transition-colors duration-300">
           {service.title}
