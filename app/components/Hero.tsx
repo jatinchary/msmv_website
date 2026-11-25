@@ -14,6 +14,8 @@ const highlights = [
   { icon: CheckCircle, text: 'Built for business owners & executives' },
 ]
 
+//hi
+
 const stats = [
   { value: 150, suffix: 'K+', label: 'Tax threshold' },
   { value: 30, suffix: ' min', label: 'Strategy call' },
